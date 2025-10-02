@@ -32,7 +32,7 @@ def solve_linear(A: np.ndarray, b: np.ndarray) -> np.ndarray:
     - np.ndarray
         Solución del sistema lineal como vector columna.
     """
-    solution = None
+    solution = linalg.solve(A, b)
     return solution
 
 # Ejercicio 2
@@ -52,8 +52,8 @@ def get_matrix_properties(mat: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
     - tuple: (det, inv)
         Determinante y matriz inversa.
     """
-    det = None
-    inv = None
+    det = linalg.det(mat)
+    inv = linalg.inv(mat)
     return (det, inv)
 
 # Ejercicio 3
@@ -74,9 +74,10 @@ def get_statistics(arg: np.ndarray) -> tuple[float, float, float]:
     - tuple: (mean, tstd, mode)
         Media, desviación estándar y moda como flotantes.
     """
-    mean = None
-    tstd = None
-    mode = None
+    mean = np.mean(arg)
+    tstd = stats.tstd(arg)   # desviación estándar muestral
+    mode_res = stats.mode(arg, keepdims=True)  # devuelve objeto con mode y count
+    mode = float(mode_res.mode[0])
     return (mean, tstd, mode)
 
 # Ejercicio 4
@@ -95,7 +96,7 @@ def find_min(fun: Callable[[float], float]) -> optimize.OptimizeResult:
     - OptimizeResult
         Objeto con los resultados de la optimización.
     """
-    found_min = None
+    found_min = optimize.minimize_scalar(fun)
     return found_min
 
 # Ejercicio 5
@@ -116,8 +117,16 @@ def get_spectrum(signal: np.ndarray, sample_rate: float) -> tuple[np.ndarray, np
     - tuple: (frecuencias, magnitudes)
         Frecuencias positivas y sus magnitudes correspondientes.
     """
-    spectrum = None
-    return spectrum
+    n = len(signal)  # número de muestras
+    fft_vals = np.fft.fft(signal)  # transformada rápida de Fourier
+    fft_freqs = np.fft.fftfreq(n, d=1/sample_rate)  # frecuencias asociadas
+
+    # Nos quedamos solo con la parte positiva del espectro
+    mask = fft_freqs >= 0
+    freqs = fft_freqs[mask]
+    magnitudes = np.abs(fft_vals[mask]) * (2.0 / n)  # normalizar amplitud
+
+    return freqs, magnitudes
 
 # Ejercicio 6
 #

@@ -29,8 +29,8 @@ def csv_registers(file: str) -> tuple[int, pd.DataFrame]:
     - tuple: (n_registros, DataFrame)
         Número de registros y contenido como DataFrame.
     """
-    data = None
-    registers = None
+    data = pd.read_csv(file)
+    registers = len(data)
     return (registers, data)
 
 # Ejercicio 2
@@ -92,7 +92,7 @@ def get_head(df: pd.DataFrame, n: int) -> pd.DataFrame:
     - pd.DataFrame
         Subconjunto con los primeros n registros.
     """
-    df_head = None
+    df_head = df.head(n)
     return df_head
 
 # Ejercicio 5
@@ -115,7 +115,7 @@ def get_above(df: pd.DataFrame, col: str, n: int) -> pd.DataFrame:
     - pd.DataFrame
         Registros que cumplen la condición col > n.
     """
-    above = None
+    above = df[df[col] > n]
     return above
 
 # Ejercicio 6
@@ -139,7 +139,7 @@ def group_and_average(df: pd.DataFrame, group: str, avg: str) -> pd.Series:
     - pd.Series
         Promedio por grupo.
     """
-    grouped = None
+    grouped = df.groupby(group)[avg].mean()
     return grouped
 
 # Ejercicio 7
@@ -161,8 +161,8 @@ def count_in_col(df: pd.DataFrame, item: str, col: str) -> int:
     - int
         Número de ocurrencias del elemento.
     """
-    count = None
-    return count 
+    count = int((df[col] == item).sum())
+    return count
 
 # Ejercicio 8
 # TODO: Crea una función "export_data" que exporte un DataFrame de entrada a un archivo CSV "file" de entrada.
@@ -180,7 +180,7 @@ def export_data(df: pd.DataFrame, file: str) -> None:
     Retorna:
     - None
     """
-    pass
+    df.to_csv(file, index=False)
 
 # Ejercicio 9
 # TODO: Crea una función "compare_dfs" que compare dos DataFrame de entrada y devuelva un True (bool) si son iguales
@@ -199,6 +199,5 @@ def compare_dfs(df1: pd.DataFrame, df2: pd.DataFrame) -> bool:
     - bool
         True si son iguales, False si no lo son.
     """
-    equal = None
+    equal = df1.equals(df2)
     return equal
-
