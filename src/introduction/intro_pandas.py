@@ -182,7 +182,7 @@ def export_data(df: pd.DataFrame, file: str) -> None:
     - None
     """
     if not os.path.exists(os.path.dirname(file)):
-        os.mkdir(os.path.dirname(file))
+        os.mkdir(os.path.dirname(file)) 
     df.to_csv(file, index=False)
 
     
