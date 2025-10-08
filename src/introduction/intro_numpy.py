@@ -92,10 +92,7 @@ def square_matrix(n: int, start: int, stop: int) -> np.ndarray:
     - np.ndarray
         Matriz cuadrada con valores enteros.
     """
-    values = np.arange(start, stop, dtype=int)
-    if values.size < n*n:
-        raise ValueError("El rango no contiene suficientes valores para llenar la matriz")
-    matrix = values[:n*n].reshape(n, n)
+    matrix =  np.matrix(np.arange(start, stop).reshape(n, n))
     return matrix
 
 # Ejercicio 5
@@ -140,9 +137,9 @@ def get_statistics(arg: np.ndarray) -> tuple[float, float, float]:
     - tuple: (mean, median, std)
         Promedio, mediana y desviación estándar como flotantes.
     """
-    mean = float(np.mean(arg))
-    median = float(np.median(arg))
-    standard = float(np.std(arg))
+    mean = np.mean(arg)
+    median = np.median(arg) 
+    standard = np.std(arg)
     return (mean, median, standard)
 
 # Ejercicio 7
@@ -161,7 +158,7 @@ def identity_matrix(n: int) -> np.ndarray:
     - np.ndarray
         Matriz identidad de tamaño n x n.
     """
-    matrix = np.identity(n, dtype=int)
+    matrix = np.identity(n)
     return matrix
 
 # Ejercicio 8
@@ -203,9 +200,7 @@ def normalize(arg:np.ndarray) -> np.ndarray:
     - np.ndarray
         Arreglo normalizado.
     """
-    min_val = np.min(arg)
-    max_val = np.max(arg)
-    normalized = (arg - min_val) / (max_val - min_val)
+    normalized = (arg - np.min(arg)) / (np.max(arg) - np.min(arg))
     return normalized
 
 # Ejercicio 10
@@ -229,4 +224,4 @@ def count_in_range(arr: np.ndarray, a: float, b: float) -> int:
         Número de elementos dentro del rango.
     """
     count = np.sum((arr >= a) & (arr <= b))
-    return int(count)
+    return count

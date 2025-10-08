@@ -8,6 +8,7 @@
 # Descripción: Ejercicios básicos de manejo de pandas
 # ============================================================
 import pandas as pd
+import os
 #########################################################################
 # NOTE: Revisa la API de Pandas en https://pandas.pydata.org/docs/      #
 #########################################################################
@@ -29,7 +30,7 @@ def csv_registers(file: str) -> tuple[int, pd.DataFrame]:
     - tuple: (n_registros, DataFrame)
         Número de registros y contenido como DataFrame.
     """
-    data = pd.read_csv(file)
+    data =   pd.read_csv(file)
     registers = len(data)
     return (registers, data)
 
@@ -50,8 +51,8 @@ def json_registers(file: str) -> tuple[int, pd.DataFrame]:
     - tuple: (n_registros, DataFrame)
         Número de registros y contenido como DataFrame.
     """
-    data = None
-    registers = None
+    data = pd.read_json
+    registers =       len(data)
     return (registers, data)
 
 # Ejercicio 3
@@ -71,8 +72,8 @@ def yaml_registers(file: str) -> tuple[int, pd.DataFrame]:
     - tuple: (n_registros, DataFrame)
         Número de registros y contenido como DataFrame.
     """
-    data = None
-    registers = None
+    data = pd.DataFrame
+    registers =      len(data)
     return (registers, data)
 
 # Ejercicio 4
@@ -161,8 +162,8 @@ def count_in_col(df: pd.DataFrame, item: str, col: str) -> int:
     - int
         Número de ocurrencias del elemento.
     """
-    count = int((df[col] == item).sum())
-    return count
+    count = df[col].value_counts().get(item, 0)
+    return count 
 
 # Ejercicio 8
 # TODO: Crea una función "export_data" que exporte un DataFrame de entrada a un archivo CSV "file" de entrada.
@@ -180,8 +181,11 @@ def export_data(df: pd.DataFrame, file: str) -> None:
     Retorna:
     - None
     """
+    if not os.path.exists(os.path.dirname(file)):
+        os.mkdir(os.path.dirname(file))
     df.to_csv(file, index=False)
 
+    
 # Ejercicio 9
 # TODO: Crea una función "compare_dfs" que compare dos DataFrame de entrada y devuelva un True (bool) si son iguales
 #       o bien, un False (bool) si no lo son.
